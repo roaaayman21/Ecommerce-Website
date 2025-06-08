@@ -1,25 +1,100 @@
-<div class="box mt-5">
-<div class="my-2 w-25">
-  <label for="" class="my-1">catgeories</label>
-  <select class="form-control">
-    <option value="1">one</option>
-    <option value="2">two</option>
-    <option value="3">three</option>
-  </select>
-</div>
-</div>
-<div class="row">
-  <div class="col-md-3 col-sm-12" *ngFor="let item of products">
-  <div class="item">
-    <img src="{{item.image}}" alt="">
-    <div class="body">
-      <h4>{{item.title}}</h4>
-      <p>{{item.description}}</p>
-    </div>
-    <div class="px-3 mb-2 d-flex justify-contant-bettwen align-items-center">
-      <button class="btn btn-sucess">add to cart</button>
-      <span>{{item.price}} le</span>
+<div class="container mt-4">
+  <div class="filters">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="mb-2">Categories</label>
+          <select class="form-select" (change)="filterCategory($event)" [(ngModel)]="selectedCategory">
+            <option value="all">All Categories</option>
+            <option [value]="option" *ngFor="let option of categories">{{option | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="mb-2">Search Products</label>
+          <input type="text" class="form-control" placeholder="Search by name or description..."
+                 [ngModel]="searchQuery" (ngModelChange)="searchProducts($event)">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="mb-2">Sort By</label>
+          <select class="form-select" (change)="sortProducts($event)">
+            <option value="default">Default</option>
+            <option value="priceAsc">Price: Low to High</option>
+            <option value="priceDesc">Price: High to Low</option>
+            <option value="nameAsc">Name: A to Z</option>
+            <option value="nameDesc">Name: Z to A</option>
+          </select>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+
+  <div class="row g-4" *ngIf="!loading">
+    <div class="col-md-3 col-sm-6" *ngFor="let item of paginatedProducts">
+      <div class="item card h-100">
+        <div class="position-relative">
+          <a [routerLink]="['/products', item.id]" class="text-decoration-none">
+            <img [src]="item.image" [alt]="item.title" class="card-img-top p-3">
+            <span class="badge bg-success position-absolute top-0 end-0 m-2" *ngIf="item.isNew">New</span>
+            <span class="badge bg-danger position-absolute top-0 start-0 m-2" *ngIf="item.discount">-{{item.discount}}%</span>
+          </a>
+        </div>
+        <div class="card-body">
+          <a [routerLink]="['/products', item.id]" class="text-decoration-none">
+            <h5 class="card-title text-truncate">{{item.title}}</h5>
+          </a>
+          <div class="d-flex align-items-center mb-2">
+            <div class="rating me-2">
+              <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]"
+                 [class.text-warning]="star <= (item.rating?.rate || 0)"
+                 [class.star-empty]="star > (item.rating?.rate || 0)"></i>
+            </div>
+            <small class="review-count">({{item.rating?.count || 0}} reviews)</small>
+          </div>
+          <p class="card-text small">{{item.description | slice:0:100}}...</p>
+        </div>
+        <div class="card-footer bg-transparent">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="pricing">
+              <span class="original-price text-decoration-line-through me-2" *ngIf="item.discount">
+                ${{item.price | number:'1.2-2'}}
+              </span>
+              <span class="price fw-bold">
+                ${{item.discount ? (item.price * (1 - item.discount/100)) : item.price | number:'1.2-2'}}
+              </span>
+            </div>
+            <button class="btn btn-outline-primary btn-sm" [routerLink]="['/products', item.id]">
+              <i class="fas fa-info-circle me-1"></i>Details
+            </button>
+          </div>
+          <button class="btn btn-primary w-100" (click)="addToCart(item)">
+            <i class="fas fa-shopping-cart me-1"></i>Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center w-100" *ngIf="loading">
+    <app-spinner></app-spinner>
+  </div>
+
+  <div class="load-more text-center mt-4 mb-5" *ngIf="hasMoreItems && !loading">
+    <button class="btn btn-primary" (click)="loadMore()">
+      <i class="bi bi-arrow-down-circle me-1"></i>Load More Products
+    </button>
+  </div>
+
+  <div class="text-center my-4" *ngIf="!hasMoreItems && !loading && paginatedProducts.length > 0">
+    <p class="end-message">You've reached the end of the list</p>
+  </div>
+
+  <div class="text-center my-4" *ngIf="!loading && paginatedProducts.length === 0">
+    <div class="alert alert-info">
+      <i class="bi bi-info-circle me-2"></i>No products found matching your criteria
+    </div>
+  </div>
 </div>

@@ -1,0 +1,252 @@
+<div class="checkout-container container py-5">
+  <!-- Order Success Message -->
+  <div *ngIf="orderPlaced" class="order-success text-center py-5">
+    <div class="success-animation">
+      <i class="fas fa-check-circle success-icon"></i>
+    </div>
+    <h2 class="text-success mb-3">Order Placed Successfully!</h2>
+    <p class="text-muted mb-4">Thank you for your purchase. You will receive a confirmation email shortly.</p>
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Redirecting...</span>
+    </div>
+    <p class="mt-2">Redirecting to home page...</p>
+  </div>
+
+  <!-- Checkout Form -->
+  <div *ngIf="!orderPlaced" class="checkout-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Checkout</h2>
+      <button class="btn btn-outline-secondary" (click)="goBackToCart()">
+        <i class="fas fa-arrow-left me-2"></i> Back to Cart
+      </button>
+    </div>
+
+    <div class="row">
+      <!-- Checkout Form -->
+      <div class="col-lg-8">
+        <form (ngSubmit)="onSubmit()" #checkoutFormRef="ngForm">
+          <!-- Shipping Information -->
+          <div class="checkout-section">
+            <h4 class="section-title">Shipping Information</h4>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label">First Name *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="firstName"
+                  [(ngModel)]="checkoutForm.firstName"
+                  name="firstName"
+                  required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName" class="form-label">Last Name *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="lastName"
+                  [(ngModel)]="checkoutForm.lastName"
+                  name="lastName"
+                  required>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">Email *</label>
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  id="email"
+                  [(ngModel)]="checkoutForm.email"
+                  name="email"
+                  required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="phone" class="form-label">Phone *</label>
+                <input 
+                  type="tel" 
+                  class="form-control" 
+                  id="phone"
+                  [(ngModel)]="checkoutForm.phone"
+                  name="phone"
+                  required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label">Address *</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                id="address"
+                [(ngModel)]="checkoutForm.address"
+                name="address"
+                required>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="city" class="form-label">City *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="city"
+                  [(ngModel)]="checkoutForm.city"
+                  name="city"
+                  required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="postalCode" class="form-label">Postal Code *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="postalCode"
+                  [(ngModel)]="checkoutForm.postalCode"
+                  name="postalCode"
+                  required>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Information -->
+          <div class="checkout-section">
+            <h4 class="section-title">Payment Information</h4>
+            
+            <div class="mb-3">
+              <label class="form-label">Payment Method *</label>
+              <div class="payment-methods">
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="paymentMethod" 
+                    id="card"
+                    value="card"
+                    [(ngModel)]="checkoutForm.paymentMethod">
+                  <label class="form-check-label" for="card">
+                    <i class="fas fa-credit-card me-2"></i> Credit/Debit Card
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input 
+                    class="form-check-input" 
+                    type="radio" 
+                    name="paymentMethod" 
+                    id="cash"
+                    value="cash"
+                    [(ngModel)]="checkoutForm.paymentMethod">
+                  <label class="form-check-label" for="cash">
+                    <i class="fas fa-money-bill me-2"></i> Cash on Delivery
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Details (shown only if card payment is selected) -->
+            <div *ngIf="checkoutForm.paymentMethod === 'card'" class="card-details">
+              <div class="mb-3">
+                <label for="cardName" class="form-label">Cardholder Name *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="cardName"
+                  [(ngModel)]="checkoutForm.cardName"
+                  name="cardName">
+              </div>
+              
+              <div class="mb-3">
+                <label for="cardNumber" class="form-label">Card Number *</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="cardNumber"
+                  [(ngModel)]="checkoutForm.cardNumber"
+                  name="cardNumber"
+                  placeholder="1234 5678 9012 3456">
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="expiryDate" class="form-label">Expiry Date *</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="expiryDate"
+                    [(ngModel)]="checkoutForm.expiryDate"
+                    name="expiryDate"
+                    placeholder="MM/YY">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="cvv" class="form-label">CVV *</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="cvv"
+                    [(ngModel)]="checkoutForm.cvv"
+                    name="cvv"
+                    placeholder="123">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-grid">
+            <button 
+              type="submit" 
+              class="btn btn-primary btn-lg"
+              [disabled]="isProcessing">
+              <span *ngIf="isProcessing" class="spinner-border spinner-border-sm me-2" role="status"></span>
+              <i *ngIf="!isProcessing" class="fas fa-lock me-2"></i>
+              {{isProcessing ? 'Processing...' : 'Place Order'}}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="order-summary">
+          <h4 class="mb-4">Order Summary</h4>
+          
+          <!-- Cart Items -->
+          <div class="order-items">
+            <div *ngFor="let item of cartItems" class="order-item d-flex mb-3">
+              <img [src]="item.image" alt="{{item.title}}" class="order-item-img me-3">
+              <div class="flex-grow-1">
+                <h6 class="mb-1">{{item.title}}</h6>
+                <small class="text-muted">Qty: {{item.quantity}}</small>
+                <div class="fw-bold">{{item.price * item.quantity | currency:'EGP '}}</div>
+              </div>
+            </div>
+          </div>
+          
+          <hr>
+          
+          <!-- Totals -->
+          <div class="summary-item d-flex justify-content-between mb-2">
+            <span>Subtotal</span>
+            <span>{{total | currency:'EGP '}}</span>
+          </div>
+          
+          <div class="summary-item d-flex justify-content-between mb-2">
+            <span>Shipping</span>
+            <span>{{shipping | currency:'EGP '}}</span>
+          </div>
+          
+          <div *ngIf="discount > 0" class="summary-item d-flex justify-content-between mb-2 text-success">
+            <span>Discount</span>
+            <span>-{{discount | currency:'EGP '}}</span>
+          </div>
+          
+          <hr>
+          
+          <div class="summary-item d-flex justify-content-between">
+            <span class="fw-bold fs-5">Total</span>
+            <span class="fw-bold fs-5">{{grandTotal | currency:'EGP '}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

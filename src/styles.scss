@@ -1,9 +1,435 @@
 
-body{
-  padding: 0;
-  margin: 0 !important;
+// Import Elegant Fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+// Elegant Design System Variables
+:root {
+  // Theme Colors - Sophisticated Light Mode
+  --background-color: #fafbfc;
+  --surface-color: #f5f7fa;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+  --card-background: #ffffff;
+  --card-border: #e2e8f0;
+  --header-background: #ffffff;
+  --footer-background: #f5f7fa;
+
+  // Primary Colors - Elegant Deep Blue
+  --primary-color: #8f25eb;
+  --primary-hover: #c69ef4;
+  --primary-light: #eff6ff;
+
+  // Secondary Colors - Warm Gray
+  --secondary-color: #6b7280;
+  --secondary-hover: #4b5563;
+  --secondary-light: #f9fafb;
+
+  // Accent Colors - Sophisticated Emerald
+  --accent-color: #059669;
+  --accent-hover: #047857;
+  --accent-light: #ecfdf5;
+
+  // Status Colors - Refined Palette
+  --success-color: #10b981;
+  --success-hover: #059669;
+  --success-light: #ecfdf5;
+
+  --danger-color: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-light: #fef2f2;
+
+  --warning-color: #d97706;
+  --warning-hover: #b45309;
+  --warning-light: #fffbeb;
+
+  --info-color: #0ea5e9;
+  --info-hover: #0284c7;
+  --info-light: #f0f9ff;
+
+  // Elegant Neutral Colors
+  --gray-50: #fafbfc;
+  --gray-100: #f5f7fa;
+  --gray-200: #edf2f7;
+  --gray-300: #e2e8f0;
+  --gray-400: #a0aec0;
+  --gray-500: #718096;
+  --gray-600: #4a5568;
+  --gray-700: #2d3748;
+  --gray-800: #1a202c;
+  --gray-900: #171923;
+
+  // Refined Border Colors
+  --border-light: #edf2f7;
+  --border-medium: #e2e8f0;
+  --border-dark: #a0aec0;
+
+  // Elegant Shadows
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  // Border Radius
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  // Spacing
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  // Elegant Typography
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  // Transitions
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  // Background aliases
+  --bg-primary: var(--card-background);
+  --bg-secondary: var(--surface-color);
+
 }
-*{
-  font-family: cursive;
+
+/* Elegant Dark Theme */
+:root[data-theme='dark'] {
+    // Sophisticated Dark Theme Colors
+    --background-color: #0d1117;
+    --surface-color: #161b22;
+    --text-primary: #f0f6fc;
+    --text-secondary: #8b949e;
+    --border-color: #30363d;
+    --card-background: #161b22;
+    --card-border: #30363d;
+    --header-background: #161b22;
+    --footer-background: #0d1117;
+
+    // Refined Dark Mode Accent Colors
+    --primary-light: #0c2d6b;
+    --secondary-light: #161b22;
+    --accent-light: #022c22;
+    --success-light: #033a16;
+    --danger-light: #67060c;
+    --warning-light: #7c2d12;
+    --info-light: #0a2540;
+
+    // Elegant Dark Neutral Colors
+    --gray-50: #0d1117;
+    --gray-100: #161b22;
+    --gray-200: #21262d;
+    --gray-300: #30363d;
+    --gray-400: #484f58;
+    --gray-500: #656d76;
+    --gray-600: #8b949e;
+    --gray-700: #b1bac4;
+    --gray-800: #c9d1d9;
+    --gray-900: #f0f6fc;
+
+    // Refined Dark Border Colors
+    --border-light: #21262d;
+    --border-medium: #30363d;
+    --border-dark: #484f58;
+
+    // Sophisticated Dark Shadows
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  }
+
+
+// Global Styles
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  font-family: var(--font-family-primary);
+  line-height: var(--leading-normal);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0;
+  padding: 0;
+  letter-spacing: -0.01em;
+}
+
+.container {
+  padding: 1.5rem;
+  background-color: var(--background-color);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// Elegant Card Styles
+.card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+  }
+
+  .card-img-top {
+    height: 220px;
+    object-fit: contain;
+    padding: var(--spacing-md);
+    background: var(--bg-secondary);
+    transition: transform var(--transition-normal);
+  }
+
+  &:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .card-body {
+    padding: var(--spacing-lg);
+  }
+
+  .card-title {
+    font-size: var(--text-lg);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+    line-height: var(--leading-tight);
+  }
+
+  .card-text {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .card-footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border-light);
+    padding: var(--spacing-lg);
+  }
+}
+
+// Elegant Button Styles
+.btn {
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-md);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
+  font-family: var(--font-family-primary);
+  letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+
+  &:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.25);
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px 0 rgba(37, 99, 235, 0.35);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success-color) 0%, var(--success-hover) 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.25);
+
+  &:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--success-hover) 0%, var(--success-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px 0 rgba(16, 185, 129, 0.35);
+  }
+}
+
+.btn-danger {
+  background-color: var(--danger-color);
+  color: white;
+
+  &:hover:not(:disabled) {
+    background-color: var(--danger-hover);
+    transform: translateY(-1px);
+  }
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+
+  &:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    color: white;
+  }
+}
+
+.btn-outline-danger {
+  background-color: transparent;
+  color: var(--danger-color);
+  border: 2px solid var(--danger-color);
+
+  &:hover:not(:disabled) {
+    background-color: var(--danger-color);
+    color: white;
+  }
+}
+
+// Elegant Form Controls
+.form-control {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  font-size: var(--text-base);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family-primary);
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    transform: translateY(-1px);
+  }
+
+  &::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.7;
+  }
+}
+
+// Utility Classes
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fw-bold {
+  font-weight: var(--font-bold);
+}
+
+.fw-semibold {
+  font-weight: var(--font-semibold);
+}
+
+.fw-medium {
+  font-weight: var(--font-medium);
+}
+
+// Loading Animation
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+// Skeleton Loading
+.skeleton {
+  background: linear-gradient(90deg, var(--gray-200) 25%, var(--gray-100) 50%, var(--gray-200) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .container {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  .card .card-body {
+    padding: var(--spacing-md);
+  }
+
+  .card .card-footer {
+    padding: var(--spacing-md);
+  }
 }
 

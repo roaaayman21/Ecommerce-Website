@@ -1,1 +1,164 @@
-<p>cart works!</p>
+<div class="cart-container container py-5">
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold mb-3">Your Shopping Cart</h1>
+    <p class="lead text-muted">Review your items and proceed to checkout</p>
+  </div>
+
+  <div *ngIf="cartItems.length === 0" class="empty-cart text-center">
+    <i class="fas fa-shopping-cart empty-cart-icon"></i>
+    <h3>Your cart is empty</h3>
+    <p class="text-muted mb-4">Looks like you haven't added anything to your cart yet.</p>
+    <a [routerLink]="['/products']" class="btn btn-primary">
+      <i class="fas fa-shopping-bag me-2"></i>
+      Start Shopping
+    </a>
+  </div>
+
+  <div *ngIf="cartItems.length > 0" class="cart-content">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="table-responsive cart-items-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cartItems">
+                <td data-label="Product">
+                  <div class="d-flex align-items-center">
+                    <img [src]="item.image" alt="{{item.title}}" class="cart-img me-3">
+                    <div>
+                      <h6 class="mb-0">{{item.title}}</h6>
+                      <small *ngIf="item.category" class="text-muted">{{item.category}}</small>
+                    </div>
+                  </div>
+                </td>
+                <td data-label="Price">
+                  <span class="fw-semibold">{{item.price | currency:'EGP '}}</span>
+                </td>
+                <td data-label="Quantity">
+                  <div class="quantity-control">
+                    <button
+                      type="button"
+                      class="btn btn-sm quantity-btn"
+                      (click)="decrementQuantity(item)"
+                      title="Decrease quantity"
+                      aria-label="Decrease quantity">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <input
+                      type="number"
+                      class="form-control quantity-input"
+                      min="1"
+                      [value]="item.quantity"
+                      (change)="updateQuantity(item, $event)"
+                      aria-label="Quantity"
+                    >
+                    <button
+                      type="button"
+                      class="btn btn-sm quantity-btn"
+                      (click)="incrementQuantity(item)"
+                      title="Increase quantity"
+                      aria-label="Increase quantity">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                </td>
+                <td data-label="Total" class="fw-bold">
+                  <span class="text-primary">{{item.price * item.quantity | currency:'EGP '}}</span>
+                </td>
+                <td data-label="Actions">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger btn-sm"
+                    (click)="deleteItem(item.id)"
+                    title="Remove item"
+                    aria-label="Remove item from cart">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <a class="btn btn-outline-secondary" [routerLink]="['/products']">
+            <i class="fas fa-arrow-left me-2"></i> Continue Shopping
+          </a>
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="clearCart()"
+            title="Clear all items from cart">
+            <i class="fas fa-trash me-2"></i> Clear Cart
+          </button>
+        </div>
+      </div>
+
+      <div class="col-lg-4 mt-4 mt-lg-0">
+        <div class="cart-summary">
+          <h4 class="mb-4">Order Summary</h4>
+
+          <div class="summary-item d-flex justify-content-between mb-2">
+            <span>Subtotal</span>
+            <span>{{total | currency:'EGP '}}</span>
+          </div>
+
+          <div class="summary-item d-flex justify-content-between mb-2">
+            <span>Shipping</span>
+            <span>{{shipping | currency:'EGP '}}</span>
+          </div>
+
+          <div *ngIf="discount > 0" class="summary-item d-flex justify-content-between mb-2 text-success">
+            <span>Discount</span>
+            <span>-{{discount | currency:'EGP '}}</span>
+          </div>
+
+          <hr>
+
+          <div class="summary-item d-flex justify-content-between mb-4">
+            <span class="fw-bold">Total</span>
+            <span class="fw-bold fs-5">{{grandTotal | currency:'EGP '}}</span>
+          </div>
+
+          <div class="promo-code mb-4">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter promo code"
+                [(ngModel)]="promoCode"
+                aria-label="Promo code">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                (click)="applyPromoCode()"
+                title="Apply promo code">
+                Apply
+              </button>
+            </div>
+            <small *ngIf="promoMessage" [class]="promoMessageClass">{{promoMessage}}</small>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary w-100"
+            (click)="checkout()"
+            [disabled]="isCheckingOut"
+            title="Proceed to checkout">
+            <span *ngIf="isCheckingOut" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            <i *ngIf="!isCheckingOut" class="fas fa-credit-card me-2" aria-hidden="true"></i>
+            {{isCheckingOut ? 'Proceeding to Checkout...' : 'Proceed to Checkout'}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

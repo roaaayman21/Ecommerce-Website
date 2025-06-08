@@ -4,12 +4,16 @@ import { HeaderComponent } from './compontes/header/header.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { SpinnerComponent } from './compontes/spinner/spinner.component';
+import { ThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 
 
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    SpinnerComponent,
+    ThemeToggleComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +23,9 @@ import { RouterModule } from '@angular/router';
     HttpClientModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    SpinnerComponent,
+    ThemeToggleComponent
   ]
 })
 export class SharedModule { }

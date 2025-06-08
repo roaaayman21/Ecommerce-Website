@@ -1,1 +1,84 @@
-<p>product-detailes works!</p>
+<div class="container mt-5" *ngIf="!loading && product">
+  <div class="row">
+    <!-- Product Image -->
+    <div class="col-md-6">
+      <div class="product-image-container">
+        <img [src]="product.image" [alt]="product.title" class="img-fluid product-image">
+        <span class="badge bg-success position-absolute top-0 start-0 m-3" *ngIf="product.isNew">New</span>
+        <span class="badge bg-danger position-absolute top-0 end-0 m-3" *ngIf="product.discount">-{{product.discount}}%</span>
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="col-md-6">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a [routerLink]="['/products']">Products</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/products']" [queryParams]="{category: product.category}">{{product.category | titlecase}}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
+        </ol>
+      </nav>
+
+      <h1 class="product-title mb-3">{{product.title}}</h1>
+
+      <div class="pricing mb-4">
+        <h2 class="price">
+          <span *ngIf="product.discount" class="original-price text-decoration-line-through me-2">
+            ${{product.price | number:'1.2-2'}}
+          </span>
+          <span class="final-price">
+            ${{getFinalPrice() | number:'1.2-2'}}
+          </span>
+        </h2>
+      </div>
+
+      <div class="rating mb-4" *ngIf="product.rating">
+        <div class="stars">
+          <i class="fas fa-star" *ngFor="let star of [1,2,3,4,5]"
+             [class.text-warning]="star <= product.rating.rate"
+             [class.star-empty]="star > product.rating.rate"></i>
+        </div>
+        <small class="review-count ms-2">({{product.rating.count}} reviews)</small>
+      </div>
+
+      <p class="description mb-4">{{product.description}}</p>
+
+      <div class="quantity-selector mb-4">
+        <label class="form-label">Quantity:</label>
+        <div class="input-group">
+          <button class="btn btn-outline-secondary" type="button" (click)="decrementQuantity()">
+            <i class="fas fa-minus"></i>
+          </button>
+          <input type="number" class="form-control text-center" [value]="quantity" readonly>
+          <button class="btn btn-outline-secondary" type="button" (click)="incrementQuantity()">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-lg" (click)="addToCart()">
+        <i class="fas fa-shopping-cart me-2"></i>
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Spinner -->
+<div class="container mt-5 text-center" *ngIf="loading">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="container mt-5 text-center" *ngIf="!loading && !product">
+  <div class="alert alert-danger">
+    <i class="fas fa-exclamation-circle me-2"></i>
+    Product not found
+  </div>
+  <a routerLink="/products" class="btn btn-primary mt-3">
+    <i class="fas fa-arrow-left me-2"></i>
+    Back to Products
+  </a>
+</div>

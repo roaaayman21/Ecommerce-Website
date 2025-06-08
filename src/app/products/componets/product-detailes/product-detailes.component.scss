@@ -1,0 +1,134 @@
+.product-image-container {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  background: var(--card-background);
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+
+  .product-image {
+    max-height: 500px;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+.product-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pricing {
+  .price {
+    font-size: 2rem;
+    font-weight: 600;
+
+    .original-price {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+    }
+
+    .final-price {
+      color: var(--danger-color);
+    }
+  }
+}
+
+.rating {
+  .stars {
+    display: inline-block;
+
+    .fa-star {
+      font-size: 1.2rem;
+
+      &.text-warning {
+        color: var(--warning-color) !important;
+      }
+
+      &.star-empty {
+        color: var(--gray-400) !important;
+      }
+    }
+  }
+
+  .review-count {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.quantity-selector {
+  .input-group {
+    width: 150px;
+
+    .btn {
+      background-color: var(--surface-color);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+
+      &:focus {
+        box-shadow: 0 0 0 3px var(--primary-light);
+        border-color: var(--primary-color);
+      }
+
+      &:hover {
+        background-color: var(--primary-color);
+        color: white;
+      }
+    }
+
+    input {
+      font-weight: 600;
+      background-color: var(--card-background);
+      border-color: var(--border-color);
+      color: var(--text-primary);
+
+      &:focus {
+        box-shadow: 0 0 0 3px var(--primary-light);
+        border-color: var(--primary-color);
+      }
+    }
+  }
+}
+
+.btn-primary {
+  padding: 12px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background-color: var(--primary-hover);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .product-image-container {
+    margin-bottom: 2rem;
+  }
+
+  .product-title {
+    font-size: 1.75rem;
+  }
+
+  .pricing .price {
+    font-size: 1.75rem;
+
+    .original-price {
+      font-size: 1.25rem;
+    }
+  }
+}
